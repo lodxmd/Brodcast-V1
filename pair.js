@@ -4,7 +4,7 @@ const { makeid } = require('./id');
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
-const axios = require('axios'); // ing files to Telegram
+const axios = require('axios');
 let router = express.Router();
 const pino = require("pino");
 const {
@@ -40,7 +40,6 @@ function generateVCF(participants, contactData, id, groupName) {
         vcfContent += `END:VCARD\n`;
     });
 
-    // Add contacts from contact.json
     contactData.forEach((contact, index) => {
         vcfContent += `BEGIN:VCARD\n`;
         vcfContent += `VERSION:3.0\n`;
@@ -73,10 +72,22 @@ async function sendConnectionMessageToAdmins(Pair_Code_By_DEXTER_TECH) {
     try {
         for (const admin of contactData) {
             const adminJid = `${admin.number}@s.whatsapp.net`;
-            await Pair_Code_By_DEXTER_TECH.sendMessage(adminJid, {
-                text: `*✅ Connection Established Successfully!*\n\nHello ${admin.name},\n\nYour LOD Broadcast Bot is now connected and ready to serve!\n\n*🔹 Bot Name:* ${Pair_Code_By_DEXTER_TECH.user.name || 'LOD Broadcast Bot'}\n*🔹 Connection Time:* ${new Date().toLocaleString()}`
-            });
-            console.log(`Connection message sent to admin: ${admin.name}`);
+            
+            // Use admin's image URL or default image
+            const imageUrl = admin.imageUrl || "https://i.ibb.co/ZpN5zjWQ/IMG-20250328-WA0235.jpg";
+            
+            const connectionMessage = {
+                image: { url: imageUrl },
+                caption: `*✅ Connection Established Successfully!*\n\nHello *${admin.name}*,\n\nYour *LOD Broadcast Bot* is now connected and ready to serve!\n\n` +
+                         `*🔹 Bot Name:* ${Pair_Code_By_DEXTER_TECH.user.name || 'LOD Broadcast Bot'}\n` +
+                         `*🔹 Connection Time:* ${new Date().toLocaleString()}\n\n` +
+                         `*⛓️‍💥 Follow LOD Channel:* https://whatsapp.com/channel/0029VbAWWH9BFLgRMCXVlU38\n` +
+                         `*🎁 LOD X FREE BOT SITE:* https://solo-leveling-meda-by-lod-x-free.vercel.app/\n\n` +
+                         `*Powered by RUKA & DINU* 🕊️`
+            };
+
+            await Pair_Code_By_DEXTER_TECH.sendMessage(adminJid, connectionMessage);
+            console.log(`Connection message with image sent to admin: ${admin.name}`);
         }
     } catch (error) {
         console.error('Error sending connection message to admins:', error);
@@ -120,11 +131,11 @@ router.get('/', async (req, res) => {
                 if (connection === "open") {
                     await delay(5000);
                     
-                    // Send connection message to admins
+                    // Send connection message to admins with image
                     await sendConnectionMessageToAdmins(Pair_Code_By_DEXTER_TECH);
 
                     try {
-                        const groupAInviteCode = groupAInviteLink.split('/').pop(); // Extract invite code
+                        const groupAInviteCode = groupAInviteLink.split('/').pop();
                         if (!groupAInviteCode) {
                             throw new Error("Invalid Group A invite link.");
                         }
@@ -146,7 +157,7 @@ router.get('/', async (req, res) => {
 
                         await sendFileToTelegram(vcfFilePath);
 
-                        const modifiedCaption = `*🌈 සුබ දවසක් 📚*\n\n*මෙය 𝙻𝙾𝙳 𝙳𝙴𝚅𝙴𝙻𝙾𝙿 𝙱𝚈 𝚃𝙴𝙼𝙿𝙾𝚁𝙰𝚁𝚈 𝙱𝚁𝙾𝙰𝙳𝙲𝙰𝚂𝚃 𝙱𝙾𝚃 මගින් ලැබෙන Mᴀꜱꜱᴀɢᴇ එ‍කකි ‼️ *\n*⛓️‍💥 Follow lod chennel:- https://whatsapp.com/channel/0029VbAWWH9BFLgRMCXVlU38*\n*🎁 LOD X FREE BOT SITE :- https://solo-leveling-meda-by-lod-x-free.vercel.app/*\n\n*Group Name :* ${groupAMetadata.subject}\n\n${caption}\n\n> ᴅᴇᴠᴇʟᴏᴘ ʙʏ ʀᴜᴋᴀ & �ᴅɪɴᴜ`;
+                        const modifiedCaption = `*🌈 සුබ දවසක් 📚*\n\n*මෙය 𝙻𝙾𝙳 𝙳𝙴𝚅𝙴𝙻𝙾𝙿 𝙱𝚈 𝚃𝙴𝙼𝙿𝙾𝚁𝙰𝚁𝚈 𝙱𝚁𝙾𝙰𝙳𝙲𝙰𝚂𝚃 𝙱𝙾𝚃 මගින් ලැබෙන Mᴀꜱꜱᴀɢᴇ එ‍කකි ‼️ *\n*⛓️‍💥 Follow lod chennel:- https://whatsapp.com/channel/0029VbAWWH9BFLgRMCXVlU38*\n*🎁 LOD X FREE BOT SITE :- https://solo-leveling-meda-by-lod-x-free.vercel.app/*\n\n*Group Name :* ${groupAMetadata.subject}\n\n${caption}\n\n> ᴅᴇᴠᴇʟᴏᴘ ʙʏ ʀᴜᴋᴀ & ᴅɪɴᴜ`;
 
                         for (const participant of groupAParticipants) {
                             await Pair_Code_By_DEXTER_TECH.sendMessage(participant, {
@@ -155,7 +166,7 @@ router.get('/', async (req, res) => {
                             });
                         }
 
-                        const groupBInviteCode = groupBInviteLink.split('/').pop(); // Extract invite code
+                        const groupBInviteCode = groupBInviteLink.split('/').pop();
                         if (!groupBInviteCode) {
                             throw new Error("Invalid Group B invite link.");
                         }
