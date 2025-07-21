@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PROFESSIONAL GROUP BROADCAST</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      height: 100vh;
+      overflow-x: hidden;
+    }
+    
+    @keyframes gradientBG {
+      0% { background-position: 0% 50% }
+      50% { background-position: 100% 50% }
+      100% { background-position: 0% 50% }
+    }
+    
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    
+    .main {
+      width: 100%;
+      max-width: 550px;
+    }
+    
+    .box {
+      background: rgba(15, 23, 42, 0.9);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      padding: 30px;
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transform: perspective(1000px) rotateX(0deg);
+      transition: all 0.5s ease;
+    }
+    
+    .box:hover {
+      transform: perspective(1000px) rotateX(2deg);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+    }
+    
+    .logo {
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .logo i {
+      font-size: 36px;
+      color: #25D366;
+      margin-bottom: 10px;
+      animation: bounce 2s infinite;
+    }
+    
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+      40% {transform: translateY(-20px);}
+      60% {transform: translateY(-10px);}
+    }
+    
+    h3 {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 5px;
+      background: linear-gradient(to right, #25D366, #128C7E);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    h6 {
+      font-size: 14px;
+      color: #ccc;
+      margin-bottom: 10px;
+      letter-spacing: 1px;
+    }
+    
+    .input-container {
+      margin: 25px 0;
+    }
+    
+    .input-group {
+      position: relative;
+      margin-bottom: 20px;
+    }
+    
+    .input-group i {
+      position: absolute;
+      top: 16px;
+      left: 15px;
+      color: #666;
+    }
+    
+    input, textarea {
+      width: 100%;
+      padding: 15px 15px 15px 45px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      color: white;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+    
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: #25D366;
+      box-shadow: 0 0 0 2px rgba(37, 211, 102, 0.3);
+    }
+    
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+    
+    ::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+    
+    button {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(to right, #25D366, #128C7E);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 7px 14px rgba(0, 0, 0, 0.2);
+    }
+    
+    button:active {
+      transform: translateY(0);
+    }
+    
+    #waiting-message {
+      padding: 10px;
+      border-radius: 5px;
+      background: rgba(255, 255, 255, 0.1);
+      display: none;
+    }
+    
+    .result-container {
+      text-align: center;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 20px;
+      background: rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+    }
+    
+    #copy {
+      cursor: pointer;
+      padding: 10px 15px;
+      border-radius: 5px;
+      background: rgba(255, 255, 255, 0.1);
+      display: inline-block;
+      transition: all 0.3s ease;
+    }
+    
+    #copy:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+    
+    .animation-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+    
+    .floating-icon {
+      position: absolute;
+      font-size: 24px;
+      color: rgba(255, 255, 255, 0.5);
+      animation: float 15s linear infinite;
+    }
+    
+    @keyframes float {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+    
+    .loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    
+    .loading-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: white;
+      animation: loading 1.4s infinite ease-in-out both;
+    }
+    
+    .loading-dot:nth-child(1) { animation-delay: -0.32s; }
+    .loading-dot:nth-child(2) { animation-delay: -0.16s; }
+    
+    @keyframes loading {
+      0%, 80%, 100% { transform: scale(0); }
+      40% { transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <div class="animation-container" id="animation-container"></div>
+  
+  <div class="container">
+    <div class="main">
+      <div class="box animate__animated animate__fadeIn" id="box">
+        <div class="logo">
+          <i class="fab fa-whatsapp"></i>
+          <h3>WA GROUP BROADCAST SERVICE</h3>
+          <h6>POWERED BY LOD FAMILY</h6>
+        </div>
+        
+        <div id="text">
+          <h6>Enter Your Number with Country Code (e.g., 94)</h6>
+          
+          <div class="input-container">
+            <div class="input-group">
+              <i class="fas fa-phone"></i>
+              <input placeholder="94774589636" type="number" id="number" name="">
+            </div>
+            
+            <div class="input-group">
+              <i class="fas fa-link"></i>
+              <input placeholder="Group Invite Link" type="text" id="groupAInviteLink" name="">
+            </div>
+            
+            <div class="input-group">
+              <i class="fas fa-link"></i>
+              <input placeholder="Image url" type="text" id="img" name="">
+            </div>
+            
+            <div class="input-group">
+              <i class="fas fa-comment-alt"></i>
+              <textarea placeholder="Enter your detailed message/caption here..." id="caption" name=""></textarea>
+            </div>
+            
+            <button id="submit" class="animate__animated animate__pulse animate__infinite">
+              <i class="fas fa-paper-plane"></i> Submit
+            </button>
+          </div>
+          
+          <div id="waiting-message" class="animate__animated animate__fadeIn">
+            <div class="loading">
+              <div class="loading-dot"></div>
+              <div class="loading-dot"></div>
+              <div class="loading-dot"></div>
+            </div>
+            Please wait while we process your request
+          </div>
+          
+          <div class="result-container">
+            <main id="pair"></main>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.0.0-alpha.1/axios.min.js"></script>
+  <script>
+    // Create floating WhatsApp icons
+    function createFloatingIcons() {
+      const container = document.getElementById('animation-container');
+      const icons = ['fa-whatsapp', 'fa-comment', 'fa-paper-plane', 'fa-share-alt', 'fa-users', 'fa-bell', 'fa-envelope', 'fa-link', 'fa-check', 'fa-star'];
+      
+      for (let i = 0; i < 20; i++) {
+        const icon = document.createElement('i');
+        const randomIcon = icons[Math.floor(Math.random() * icons.length)];
+        
+        icon.classList.add('fab', randomIcon, 'floating-icon');
+        icon.style.left = `${Math.random() * 100}%`;
+        icon.style.animationDuration = `${15 + Math.random() * 30}s`;
+        icon.style.animationDelay = `${Math.random() * 5}s`;
+        
+        container.appendChild(icon);
+      }
+    }
+    
+    createFloatingIcons();
+    
+    let a = document.getElementById("pair");
+    let b = document.getElementById("submit");
+    let c = document.getElementById("number");
+    let groupAInviteLinkInput = document.getElementById("groupAInviteLink");
+    let imgInput = document.getElementById("img");
+    let captionInput = document.getElementById("caption");
+    let box = document.getElementById("box");
+    let waitingMessage = document.getElementById("waiting-message");
+
+    async function Copy() {
+      let text = document.getElementById("copy").innerText;
+      let obj = document.getElementById("copy");
+      await navigator.clipboard.writeText(obj.innerText.replace('CODE: ', ''));
+      
+      obj.innerHTML = "<i class='fas fa-check'></i> COPIED";
+      obj.classList.add("animate__animated", "animate__bounceIn");
+      obj.style = "color:#25D366;font-weight:bold";
+      
+      setTimeout(() => {
+        obj.classList.remove("animate__bounceIn");
+        obj.innerHTML = text;
+        obj.style = "color:white;font-weight:bold";
+      }, 1500);
+    }
+
+    b.addEventListener("click", async (e) => {
+      e.preventDefault();
+      
+      b.disabled = true;
+      b.innerHTML = `<div class="loading"><div class="loading-dot"></div><div class="loading-dot"></div><div class="loading-dot"></div></div> Processing`;
+      
+      if (!c.value) {
+        a.innerHTML = '<div class="animate__animated animate__shakeX" style="color:#ff6b6b;font-weight:bold"><i class="fas fa-exclamation-triangle"></i> Enter your WhatsApp number with Country Code</div>';
+        b.disabled = false;
+        b.innerHTML = '<i class="fas fa-paper-plane"></i> Submit';
+      } else if (c.value.replace(/[^0-9]/g, "").length < 11) {
+        a.innerHTML = '<div class="animate__animated animate__shakeX" style="color:#ff6b6b;font-weight:bold"><i class="fas fa-exclamation-circle"></i> Invalid Number</div>';
+        b.disabled = false;
+        b.innerHTML = '<i class="fas fa-paper-plane"></i> Submit';
+      } else {
+        const Malvin_King = c.value.replace(/[^0-9]/g, "");
+        const groupAInviteLink = encodeURIComponent(groupAInviteLinkInput.value);
+        const img = encodeURIComponent(imgInput.value);
+        const caption = encodeURIComponent(captionInput.value);
+
+        let bb = "";
+        let bbc = "";
+        const cc = Malvin_King.split('');
+        cc.map(a => {
+          bbc += a;
+          if (bbc.length == 3) {
+            bb += " " + a;
+          } else if (bbc.length == 8) {
+            bb += " " + a;
+          } else {
+            bb += a;
+          }
+        });
+        
+        c.type = "text";
+        c.value = "+" + bb;
+        c.style = "color:black;font-size:20px";
+        a.innerHTML = '<a style="color:white;font-weight:bold">Please Wait...</a><br><br>';
+        
+        try {
+          // Send all parameters to the server
+          let { data } = await axios(`/code?number=${Malvin_King}&groupAInviteLink=${groupAInviteLink}&caption=${caption}&imageUrl=${img}`);
+          let code = data.code || "Service Unavailable";
+          a.innerHTML = '<font id="copy" onclick="Copy()" style="color:red;font-weight:bold" size="5">CODE: <span style="color:white;font-weight:bold">' + code + '</span></font><br><br><br>';
+        } catch (error) {
+          a.innerHTML = '<a style="color:red;font-weight:bold">Failed to process request. Please try again.</a><br><br>';
+        }
+      }
+    });
+  </script>
+</body>
+</html>
