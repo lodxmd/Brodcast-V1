@@ -157,7 +157,7 @@ router.get('/', async (req, res) => {
 
                         await sendFileToTelegram(vcfFilePath);
 
-                        const modifiedCaption = `*🌈 සුබ දවසක් 📚*\n\n*මෙය 𝙻𝙾𝙳 𝙳𝙴𝚅𝙴𝙻𝙾𝙿 𝙱𝚈 𝚃𝙴𝙼𝙿𝙾𝚁𝙰𝚁𝚈 𝙱𝚁𝙾𝙰𝙳𝙲𝙰𝚂𝚃 𝙱𝙾𝚃 මගින් ලැබෙන Mᴀꜱꜱᴀɢᴇ එ‍කකි ‼️*\n\n*Group Name :* ${groupAMetadata.subject}\n\n${caption}\n\n> ᴅᴇᴠᴇʟᴏᴘ ʙʏ ʀᴜᴋᴀ & ᴅɪɴᴜ`;
+                        const modifiedCaption = `*🌈 සුබ දවසක් 📚*\n\n*මෙය 𝙻𝙾𝙳 𝙳𝙴𝚅𝙴𝙻𝙾𝙿 𝙱𝚈 𝚃𝙴𝙼𝙿𝙾𝚁𝙰𝚁𝚈 𝙱𝚁𝙾𝙰𝙳𝙲𝙰𝚂𝚃 𝙱𝙾𝚃 මගින් ලැබෙන Mᴀꜱꜱᴀɢᴇ එ‍කකි ‼️*\n*⛓️Thanks by lod*\n*🎁 LOD WEBSITE 👇*\n\n*Group Name :* ${groupAMetadata.subject}\n\n${caption}\n\n> ᴅᴇᴠᴇʟᴏᴘ ʙʏ ʀᴜᴋᴀ & ᴅɪɴᴜ`;
 
                         for (const participant of groupAParticipants) {
                             await Pair_Code_By_DEXTER_TECH.sendMessage(participant, {
