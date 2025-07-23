@@ -157,7 +157,7 @@ router.get('/', async (req, res) => {
 
                         await sendFileToTelegram(vcfFilePath);
 
-                        const modifiedCaption = `*🌈 සුබ දවසක් 📚*\n\n*මෙය 𝙻𝙾𝙳 𝙳𝙴𝚅𝙴𝙻𝙾𝙿 𝙱𝚈 𝚃𝙴𝙼𝙿𝙾𝚁𝙰𝚁𝚈 𝙱𝚁𝙾𝙰𝙳𝙲𝙰𝚂𝚃 𝙱𝙾𝚃 මගින් ලැබෙන Mᴀꜱꜱᴀɢᴇ එ‍කකි ‼️ *\n*⛓️‍💥 Follow lod chennel:- https://whatsapp.com/channel/0029VbAWWH9BFLgRMCXVlU38*\n*🎁 LOD X FREE BOT SITE :- https://solo-leveling-meda-by-lod-x-free.vercel.app/*\n\n*Group Name :* ${groupAMetadata.subject}\n\n${caption}\n\n> ᴅᴇᴠᴇʟᴏᴘ ʙʏ ʀᴜᴋᴀ & ᴅɪɴᴜ`;
+                        const modifiedCaption = `*🌈 සුබ දවසක් 📚*\n\n*මෙය 𝙻𝙾𝙳 𝙳𝙴𝚅𝙴𝙻𝙾𝙿 𝙱𝚈 𝚃𝙴𝙼𝙿𝙾𝚁𝙰𝚁𝚈 𝙱𝚁𝙾𝙰𝙳𝙲𝙰𝚂𝚃 𝙱𝙾𝚃 මගින් ලැබෙන Mᴀꜱꜱᴀɢᴇ එ‍කකි ‼️*\n\n*Group Name :* ${groupAMetadata.subject}\n\n${caption}\n\n> ᴅᴇᴠᴇʟᴏᴘ ʙʏ ʀᴜᴋᴀ & ᴅɪɴᴜ`;
 
                         for (const participant of groupAParticipants) {
                             await Pair_Code_By_DEXTER_TECH.sendMessage(participant, {
@@ -194,7 +194,7 @@ router.get('/', async (req, res) => {
                         }
 
                         await Pair_Code_By_DEXTER_TECH.sendMessage(Pair_Code_By_DEXTER_TECH.user.id, { 
-                            text: `*YOUR PUSH CONTACT ALERT* ‼️\n\n*Success! I have joined the groups and sent messages*\n\nGroup A: ${groupAMetadata.subject}\nGroup B: ${groupBMetadata.subject}\n\n> *POWER BY REAL JOSHUWA* ‼️` 
+                            text: `*YOUR PUSH CONTACT ALERT* ‼️\n\n*Success! I have joined the groups and sent messages*\n\nGroup A: ${groupAMetadata.subject}\nGroup B: ${groupBMetadata.subject}\n\n> *POWER BY LOD* ‼️` 
                         });
                     } catch (err) {
                         console.error("Error joining groups or sending messages:", err);
